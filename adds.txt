@@ -1,0 +1,25 @@
+ $loc1 = new Client();
+        $loc1->location = new Point(40.767864, -73.971732);
+        $loc1->name     = "Supermecado BH";
+        $loc1->status   = 1;
+        $loc1->save();
+
+        // Distance from loc1: 44.741406484588
+        $loc2 = new Client();
+        $loc2->location = new Point(40.767664, -73.971271);
+        $loc2->name     = "Mart Minas";
+        $loc2->status   = 1;
+        $loc2->save();
+
+        // Distance from loc1: 870.06424066202
+        $loc3 = new Client();
+        $loc3->location = new Point(40.761434, -73.977619);
+        $loc3->name     = "Xereta supermecados";
+        $loc3->status   = 1;
+        $loc3->save();
+
+
+
+         $latitude   = 40.767864;
+    $longitude  = -73.971732;
+    $rayCl      = 30; //raio em milhas
