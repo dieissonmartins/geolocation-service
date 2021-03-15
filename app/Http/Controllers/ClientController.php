@@ -77,6 +77,7 @@ class ClientController extends Controller
             // você deve informar 3 parâmetros: distanceSphere($geometryColumn, $geometry, $distance); A distância deve ser informada em milhas.
             $clients = Client::distanceSphere('location', new Point($latitude, $longitude), $rayCl)
                         ->whereStatus(1) // Aqui é um exemplo de que você pode usar os métodos padrões do seu model junto com os métodos da lib
+                        ->with('adverts') // Relacionamento pega anúncios da tabela (adverts)
                         ->get();
             
             return response()->json([

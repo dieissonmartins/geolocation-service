@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use  App\Models\Announcement;
+
 use Illuminate\Database\Eloquent\Model;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
@@ -12,6 +14,8 @@ use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 class Client extends Model
 {
     use SpatialTrait;
+
+    protected $table = 'clients';
 
     protected $fillable         = ['name','status','location'];
 
@@ -26,4 +30,9 @@ class Client extends Model
         'created_at'    => 'datetime:d/m/Y H:y:s',
         'updated_at'    => 'datetime:d/m/Y H:y:s'
     ];
+
+    public function adverts()
+    {
+        return $this->hasMany(Announcement::class, 'client_id', 'id');
+    }
 }
