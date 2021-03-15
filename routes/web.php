@@ -27,3 +27,7 @@ $router->group(['prefix' => 'adverts', 'middleware' => 'auth'], function() use (
     $router->post('/create/store',  'AnnouncementController@store');
     $router->get('/{id}/show',      'AnnouncementController@find');
 });
+
+$router->group(['prefix' => 'register'], function() use ($router) {
+    $router->post('',  'ClientController@UserStore');
+});

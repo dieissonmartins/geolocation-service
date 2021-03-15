@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\UserRole;
 
 
 class ClientController extends Controller
@@ -90,5 +93,38 @@ class ClientController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 401);
         }
+    }
+
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function UserStore(Request $request)
+    {
+        $data               = $request->all();
+        
+		try{
+            $user = User::create([
+                'name'      => $data['name'],
+                'email'     => $data['email'],
+                'password'  => Hash::make($data['password']),
+            ]);
+    
+            UserRole::create([
+                'role_id'   => '3',
+                'model_type'=> 'App\Models\User',
+                'model_id'  => $user->id,
+            ]);
+
+			return response()->json([
+				'data' => [
+					'msg' => 'Conta criada com sucesso!'
+				]
+			], 200);
+
+		} catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+		}
     }
 }
