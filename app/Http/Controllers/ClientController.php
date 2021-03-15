@@ -21,6 +21,11 @@ class ClientController extends Controller
         $this->client = $client;
     }
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function index()
     {
         $clients = $this->client->all();
@@ -30,6 +35,11 @@ class ClientController extends Controller
         ], 200);
     }
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function store(Request $request)
     {
         $data               = $request->all();
@@ -49,6 +59,11 @@ class ClientController extends Controller
 		}
     }
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function showAdvertsLocalization(Request $request)
     {
         $data       = $request->all();
