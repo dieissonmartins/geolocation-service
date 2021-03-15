@@ -22,6 +22,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/clients',                'ClientController@index');
+$router->post('/clients/create/store',  'ClientController@store');
+$router->post('/clients/adverts/local', 'ClientController@showAdvertsLocalization');
+
 
 //test endpoint
 $router->get('geolocation/create', function () {
@@ -33,14 +37,16 @@ $router->get('geolocation/create', function () {
         $loc1->status   = 1;
         $loc1->save();
 
+        // Distance from loc1: 44.741406484588
         $loc2 = new Client();
-        $loc2->location = new Point(40.767664, -73.971271); // Distance from loc1: 44.741406484588
+        $loc2->location = new Point(40.767664, -73.971271);
         $loc2->name     = "Mart Minas";
         $loc2->status   = 1;
         $loc2->save();
 
+        // Distance from loc1: 870.06424066202
         $loc3 = new Client();
-        $loc3->location = new Point(40.761434, -73.977619); // Distance from loc1: 870.06424066202
+        $loc3->location = new Point(40.761434, -73.977619);
         $loc3->name     = "Xereta supermecados";
         $loc3->status   = 1;
         $loc3->save();

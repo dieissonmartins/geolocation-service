@@ -13,7 +13,17 @@ class Client extends Model
 {
     use SpatialTrait;
 
-    protected $fillable         = ['name'];
+    protected $fillable         = ['name','status','location'];
 
     protected $spatialFields    = ['location'];
+
+    /**
+    * The attributes that should be cast.
+    *
+    * @var array
+    */
+    protected $casts = [ 
+        'created_at'    => 'datetime:d/m/Y H:y:s',
+        'updated_at'    => 'datetime:d/m/Y H:y:s'
+    ];
 }
