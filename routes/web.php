@@ -16,3 +16,19 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+//test endpoint
+$router->get('foo', function () {
+    try{
+
+        return response()->json([
+            'data' => [
+                'msg' => 'foo sucess!'
+            ]
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 401);
+    }
+});
