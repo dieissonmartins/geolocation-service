@@ -25,5 +25,5 @@ $router->group(['prefix' => 'clients', 'middleware' => 'auth'], function() use (
 
 $router->group(['prefix' => 'adverts', 'middleware' => 'auth'], function() use ($router) {
     $router->post('/create/store',  'AnnouncementController@store');
-    $router->get('/{id}/show',     'AnnouncementController@find');
+    $router->get('/{id}/show',      'AnnouncementController@find');
 });
