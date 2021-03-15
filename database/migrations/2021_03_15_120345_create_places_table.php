@@ -14,12 +14,14 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
+           
             $table->increments('id');
             $table->string('name')->nullable();
+           
             // Add a Point spatial data field named location
             $table->point('location')->nullable();
-            // Add a Polygon spatial data field named area
-            $table->polygon('area')->nullable();
+           
+            $table->tinyInteger('status')->default(1)->comment('0=Disabled, 1=Enabled');
             $table->timestamps();
         });
     }

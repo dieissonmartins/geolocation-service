@@ -7,7 +7,6 @@ use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Grimzy\LaravelMysqlSpatial\Types\Polygon;
 use Grimzy\LaravelMysqlSpatial\Types\LineString;
 
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -25,29 +24,30 @@ $router->get('/', function () use ($router) {
 
 
 //test endpoint
-$router->get('foo', function () {
+$router->get('geolocation/create', function () {
     try{
 
-        $place1 = new Client();
-        $place1->name = 'Empire State Building';
+        $loc1 = new Client();
+        $loc1->location = new Point(40.767864, -73.971732);
+        $loc1->name     = "Supermecado BH";
+        $loc1->status   = 1;
+        $loc1->save();
 
-        // saving a point with SRID 4326 (WGS84 spheroid)
-        $place1->location = new Point(40.7484404, -73.9878441, 4326);	// (lat, lng, srid)
-        $place1->save();
+        $loc2 = new Client();
+        $loc2->location = new Point(40.767664, -73.971271); // Distance from loc1: 44.741406484588
+        $loc2->name     = "Mart Minas";
+        $loc2->status   = 1;
+        $loc2->save();
 
-        // saving a polygon with SRID 4326 (WGS84 spheroid)
-        $place1->area = new Polygon([new LineString([
-            new Point(40.74894149554006, -73.98615270853043),
-            new Point(40.74848633046773, -73.98648262023926),
-            new Point(40.747925497790725, -73.9851602911949),
-            new Point(40.74837050671544, -73.98482501506805),
-            new Point(40.74894149554006, -73.98615270853043)
-        ])], 4326);
-        $place1->save();
+        $loc3 = new Client();
+        $loc3->location = new Point(40.761434, -73.977619); // Distance from loc1: 870.06424066202
+        $loc3->name     = "Xereta supermecados";
+        $loc3->status   = 1;
+        $loc3->save();
 
         return response()->json([
             'data' => [
-                'msg' => 'foo sucess!'
+                'msg' => 'create sucess!'
             ]
         ], 200);
 
@@ -55,3 +55,29 @@ $router->get('foo', function () {
         return response()->json(['error' => $e->getMessage()], 401);
     }
 });
+
+$router->get('geolocation/list', function () {
+    
+    $latitude   = 40.767864;
+    $longitude  = -73.971732;
+    $rayCl      = 30; //raio em milhas
+
+    try{
+        // O método distanceSphere() é da lib instalada, 
+        // você deve informar 3 parâmetros: distanceSphere($geometryColumn, $geometry, $distance); A distância deve ser informada em milhas.
+        $clients = Client::distanceSphere('location', new Point($latitude, $longitude), $rayCl)
+                    ->whereStatus(1) // Aqui é um exemplo de que você pode usar os métodos padrões do seu model junto com os métodos da lib
+                    ->get();
+        
+        return response()->json([
+            'data' => [
+                'advertsTitle' => 'Anúncios no raio de 15 metros',
+                'dataAdverts' =>  $clients
+            ]
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 401);
+    }
+});
+

@@ -13,12 +13,7 @@ class Client extends Model
 {
     use SpatialTrait;
 
-    protected $fillable = [
-        'name'
-    ];
+    protected $fillable         = ['name'];
 
-    protected $spatialFields = [
-        'location',
-        'area'
-    ];
+    protected $spatialFields    = ['location'];
 }
