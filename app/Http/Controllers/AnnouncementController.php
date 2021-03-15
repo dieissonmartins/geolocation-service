@@ -27,6 +27,7 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         $data               = $request->all();
+        //return $data;
 
 		try{
 			$announcement = $this->announcement->create($data);
@@ -36,6 +37,27 @@ class AnnouncementController extends Controller
 					'msg' => 'Anúncio cadastrado com sucesso!'
 				]
 			], 200);
+
+		} catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+		}
+    }
+
+    /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+    public function find($id)
+    {
+        try{
+            $announcement = $this->announcement->find($id);
+            $announcement->qtd_view = (int)$announcement->qtd_view +1;
+            $announcement->save();
+    
+            return response()->json([
+                'data' => $announcement
+            ], 200);
 
 		} catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 401);
