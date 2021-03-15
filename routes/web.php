@@ -26,6 +26,8 @@ $router->get('/clients',                'ClientController@index');
 $router->post('/clients/create/store',  'ClientController@store');
 $router->post('/clients/adverts/local', 'ClientController@showAdvertsLocalization');
 
+$router->post('/adverts/create/store',  'AnnouncementController@store');
+
 
 //test endpoint
 $router->get('geolocation/create', function () {
