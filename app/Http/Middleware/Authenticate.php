@@ -4,6 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class Authenticate
 {
@@ -34,11 +37,15 @@ class Authenticate
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
-    {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
-        }
+    {  
+        if ( $request->getUser() && $request->getPassword() ) {
+            $user = User::where('email', $request->getUser())->first();
 
-        return $next($request);
+            if ($user && Hash::check($request->getPassword(),$user->password)) {
+                return $next($request);
+            }
+        }
+        
+        return response('Unauthorized.', 401);
     }
 }

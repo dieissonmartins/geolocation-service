@@ -22,9 +22,11 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/clients',                'ClientController@index');
-$router->post('/clients/create/store',  'ClientController@store');
-$router->post('/clients/adverts/local', 'ClientController@showAdvertsLocalization');
+$router->group(['prefix' => 'clients', 'middleware' => 'auth'], function() use ($router) {
+    $router->get('',                'ClientController@index');
+    $router->post('/create/store',  'ClientController@store');
+    $router->post('/adverts/local', 'ClientController@showAdvertsLocalization');
+});
 
 $router->post('/adverts/create/store',  'AnnouncementController@store');
 
