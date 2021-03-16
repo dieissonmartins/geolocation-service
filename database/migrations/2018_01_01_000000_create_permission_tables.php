@@ -20,7 +20,7 @@ class CreatePermissionTables extends Migration
             throw new \Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
 
-         
+        /* 
         Schema::create('permissions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
@@ -29,6 +29,7 @@ class CreatePermissionTables extends Migration
 
             //$table->unique(['name', 'guard_name']);
         });
+        */
       
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
@@ -105,7 +106,7 @@ class CreatePermissionTables extends Migration
      */
     public function down()
     {
-        Schema::drop('permissions');
+        //Schema::drop('permissions');
         
         $tableNames = config('permission.table_names');
 
