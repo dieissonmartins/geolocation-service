@@ -73,7 +73,7 @@ class ClientController extends Controller
 
         $latitude   = $data['latitude'];
         $longitude  = $data['longitude'];
-        $rayCl      = 30; //raio em milhas
+        $rayCl      = 0.00932057; //raio em milhas (15 metros)
 
         try{
             // O método distanceSphere() é da lib instalada, 
