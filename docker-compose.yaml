@@ -1,0 +1,36 @@
+version: '3'
+
+services: 
+  lumen-app:
+    build: .
+    ports: 
+      - "8080:80" ## docker-compose up -d
+    volumes: 
+      - ./:/usr/share/nginx ## docker-compose down
+    networks:   
+      - app-network
+
+    ## docker-compose up -d --build
+    ## ln -s public html (500 Internal Server Error)
+  
+  mysql-app:
+    image: mysql:5.7.22
+    volumes: 
+      - .docker/dbdata:/var/lib/mysql
+    ports: 
+      - "3306:3306"
+    environment: 
+      MYSQL_DATABASE: geolocation_service
+      MYSQL_ROOT_PASSWORD: laravel
+    networks: 
+        - app-network 
+
+networks: 
+  app-network: 
+    driver: bridge
+
+    ## docker-compose up -d --build
+    ## docker exec -it geolocation_service_lumen-app_1 bash
+    ## cd usr/share/nginx
+    ## php artisan migrate
+    ## docker-compose exec your-container php artisan config:cache
