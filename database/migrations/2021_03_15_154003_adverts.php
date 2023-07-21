@@ -14,11 +14,10 @@ class Adverts extends Migration
     public function up()
     {
         Schema::create('adverts', function (Blueprint $table) {
-           
+
             $table->increments('id');
 
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients');
 
             $table->text('description')->nullable();
             $table->string('image',500)->nullable();
