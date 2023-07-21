@@ -1,0 +1,3 @@
+sudo chmod o+w ./storage/ -R
+
+sudo chmod -R 777 bootstrap/cache/
