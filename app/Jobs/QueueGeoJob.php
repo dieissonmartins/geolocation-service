@@ -48,13 +48,11 @@ class QueueGeoJob implements QueueJobInterface
         # $clients = Client::distance('location', $point, $ray_cl);
 
         # retorna items ordenado pela distancia
-        $clients = Client::orderByDistance('location', $point, 'ASC');
+        $sql = Client::orderByDistance('location', $point, 'ASC');
 
+        $aux = $sql->get()->toArray();
 
-        $res = $clients->get();
-
-        $aux = $res->toArray();
-
+        $res = $sql->toSql();
 
     }
 }
