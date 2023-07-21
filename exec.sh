@@ -1,1 +1,1 @@
-docker exec -it meucuidador-php sh
+docker exec -it geo-php sh
