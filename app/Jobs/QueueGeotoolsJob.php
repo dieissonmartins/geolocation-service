@@ -6,6 +6,7 @@ use App\Jobs\Interfaces\QueueJobInterface;
 use Exception;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Geotools;
+use League\Geotools\Polygon\Polygon;
 
 class QueueGeotoolsJob implements QueueJobInterface
 {
@@ -41,15 +42,21 @@ class QueueGeotoolsJob implements QueueJobInterface
         $latitude = $params['latitude'];
         $longitude = $params['longitude'];
 
+        $latitude_b = -19.990224673;
+        $longitude_b = -44.00795550;
+
         $ray_cl = $params['ray_cl'];
 
         # test distance
         $geotools = new Geotools();
         $coord_a = new Coordinate([$latitude, $longitude]);
-        $coord_b = new Coordinate([-19.990224673, -44.00795550]);
-        $distance = $geotools->distance()->setFrom($coord_a)->setTo($coord_b);
-        $distance_in_meters = $distance->flat(); // 659166.50038742 (meters)
+        $coord_b = new Coordinate([$latitude_b, $longitude_b]);
 
+        $distance = $geotools->distance()->setFrom($coord_a)->setTo($coord_b);
+
+        $distance_in_meters = $distance->flat(); // 160.91117492784232 (meters)
+
+        $circle = $distance->greatCircle();
 
     }
 }
