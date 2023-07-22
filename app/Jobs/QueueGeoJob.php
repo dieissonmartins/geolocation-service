@@ -18,7 +18,7 @@ class QueueGeoJob implements QueueJobInterface
         $params = [
             'latitude' => -19.99092218,
             'longitude' => -44.00930471,
-            'ray_cl' => 10  //raio em milhas (1000 metros)
+            'ray_cl' => 1000 // metros
         ];
 
         return $params;
@@ -45,10 +45,10 @@ class QueueGeoJob implements QueueJobInterface
         $point = new Point($latitude, $longitude);
 
         # retorna items
-        # $clients = Client::distance('location', $point, $ray_cl);
+        $sql = Client::distanceSphere('location', $point, $ray_cl);
 
         # retorna items ordenado pela distancia
-        $sql = Client::orderByDistance('location', $point, 'ASC');
+        # $sql = Client::orderByDistance('location', $point, 'ASC');
 
         $aux = $sql->get()->toArray();
 
